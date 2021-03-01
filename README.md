@@ -1,6 +1,6 @@
 # Stonk Ticker
 
-View the ticker here: https://stock-ticker.surge.sh
+View the ticker here: https://stonk-ticker.surge.sh
 
 
 # TODO
