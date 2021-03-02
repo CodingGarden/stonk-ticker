@@ -6,7 +6,6 @@ View the ticker here: https://stonk-ticker.surge.sh
 # TODO
 * Refactor
 * Add loading indicator
-* Allow multiple symbols
 * Allow scroll speed customization
 * Custom emojis
 * Specify direction

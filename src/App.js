@@ -13,8 +13,7 @@ function formatPrice(price) {
 }
 
 function App() {
-  const [stonk, setStonk] = useState(null);
-  const [direction, setDirection] = useState('');
+  const [stonks, setStonks] = useState([]);
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const ws = new WebSocket('wss://streamer.finance.yahoo.com');
@@ -26,9 +25,13 @@ function App() {
 
       ws.onopen = function open() {
         console.log('connected');
-        ws.send(JSON.stringify({
-          subscribe: [(params.get('symbol') || 'GME').toUpperCase()],
-        }));
+        ws.send(
+          JSON.stringify({
+            subscribe: (params.get('symbols') || 'GME')
+              .split(',')
+              .map((symbol) => symbol.toUpperCase()),
+          })
+        );
       };
 
       ws.onclose = function close() {
@@ -37,22 +40,42 @@ function App() {
 
       ws.onmessage = function incoming(message) {
         const next = Yaticker.decode(new Buffer(message.data, 'base64'));
-        setStonk((current) => {
-          if (current) {
-            const nextDirection = current.price < next.price ? 'up' : current.price > next.price ? 'down' : '';
-            if (nextDirection) {
-              setDirection(nextDirection);
-            }
+        setStonks((current) => {
+          let stonk = current.find((stonk) => stonk.id === next.id);
+          if (stonk) {
+            stonk = {
+              ...next,
+              direction:
+                stonk.price < next.price
+                  ? 'up'
+                  : stonk.price > next.price
+                  ? 'down'
+                  : '',
+            };
+            return current;
+          } else {
+            return [
+              ...current,
+              {
+                ...next,
+                direction: '',
+              },
+            ];
           }
-          return next;
         });
       };
     });
   }, []);
 
   return (
-    <div className="stonk">
-      {stonk && <h2 className={direction}>{stonk.id} {formatPrice(stonk.price)} {emojis[direction]}</h2>}
+    <div className="stonks">
+      {stonks.map((stonk) => (
+        <div className="stonk" key={stonk.id}>
+          <h2 className={stonk.direction}>
+            {stonk.id} {formatPrice(stonk.price)} {emojis[stonk.direction]}
+          </h2>
+        </div>
+      ))}
     </div>
   );
 }
