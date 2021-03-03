@@ -34,9 +34,9 @@ body {
   display: flex;
   align-items: center;
   position: absolute;
-  /* left: 100%; */
-  /* width: 100%; */
-  /* animation: scroll 20s infinite linear; */
+  left: 100%;
+  width: 100%;
+  animation: scroll 20s infinite linear;
 }
 
 .stonk {
