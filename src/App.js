@@ -43,16 +43,20 @@ function App() {
         setStonks((current) => {
           let stonk = current.find((stonk) => stonk.id === next.id);
           if (stonk) {
-            stonk = {
-              ...next,
-              direction:
-                stonk.price < next.price
-                  ? 'up'
-                  : stonk.price > next.price
-                  ? 'down'
-                  : '',
-            };
-            return current;
+            return current.map((stonk) => {
+              if (stonk.id === next.id) {
+                return {
+                  ...next,
+                  direction:
+                    stonk.price < next.price
+                      ? 'up'
+                      : stonk.price > next.price
+                      ? 'down'
+                      : stonk.direction,
+                };
+              }
+              return stonk;
+            });
           } else {
             return [
               ...current,

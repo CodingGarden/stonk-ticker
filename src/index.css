@@ -11,7 +11,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 35vmin;
+  font-size: clamp(1rem, 35vmin, 20rem);
   width: 100vw;
   height: 100vh;
   overflow: none;
@@ -33,15 +33,15 @@ body {
 .stonks {
   display: flex;
   align-items: center;
-  justify-content: space-around;
   position: absolute;
-  left: 100%;
-  width: 100%;
-  animation: scroll 20s infinite linear;
+  /* left: 100%; */
+  /* width: 100%; */
+  /* animation: scroll 20s infinite linear; */
 }
 
 .stonk {
   white-space: nowrap;
+  margin: clamp(1rem, 10vmin, 50rem);
 }
 
 @keyframes scroll {
