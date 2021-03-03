@@ -30,12 +30,18 @@ body {
   position: relative;
 }
 
-.stonk {
-  width: 100%;
-  margin: 0;
+.stonks {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   position: absolute;
   left: 100%;
+  width: 100%;
   animation: scroll 20s infinite linear;
+}
+
+.stonk {
+  white-space: nowrap;
 }
 
 @keyframes scroll {
